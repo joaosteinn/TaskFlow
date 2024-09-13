@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -15,32 +16,45 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              
               Card.outlined(
                 child: _SampleCard(cardName: 'Morning Yoga Routine'),
-                color: Color(0xFF946DE8),
+                color: Color(0xFF946DE8), 
+
                 ),
               Card.outlined
               (child: _SampleCard(cardName: 'Read a Chapter of a...'),
               color: Color(0xFF946DE8),
               ),
+
               Card.outlined(
                 child: _SampleCard(cardName: 'Cook a New Recipe...'),
                 color: Color(0xFF946DE8),
                 ),
+                
                const SizedBox(height: 60)
             ],
           ),
         ),
          bottomNavigationBar: BottomNavigationBar(
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: ImageIcon(AssetImage('assets/images/Task 2.svg')),
+              icon: Icon(Icons.task, color: (Color.fromARGB(255, 2, 0, 5))),
+              label: '',
+              backgroundColor: Color(0xFF946DE8),
             ),
             BottomNavigationBarItem(
-              icon: ImageIcon(AssetImage('assets/images/Task 3.svg')),
+               icon: Icon(Icons.task_alt, color: (Color.fromARGB(255, 2, 0, 5)), 
+               weight:40,
+               
+               ),
+              label: '',
+              backgroundColor: Color(0xFF946DE8),
             ),
             BottomNavigationBarItem(
-              icon: ImageIcon(AssetImage('assets/images/Lixeira.svg')),
+              icon: Icon(Icons.delete, color: (Color.fromARGB(255, 2, 0, 5))),
+              label: '',
+              backgroundColor: Color(0xFF946DE8),
             ),
           ],
         )
