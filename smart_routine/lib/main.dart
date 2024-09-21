@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_routine/screens/home/home_page.dart';
+import 'package:smart_routine/screens/login/login_page.dart';
+import 'package:smart_routine/screens/register/register_page.dart';
 import 'package:smart_routine/theme.dart';
 
 void main() {
@@ -9,13 +11,18 @@ void main() {
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
- @override
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: HomePage(),
       theme: MaterialTheme(Theme.of(context).textTheme).light(),
-     darkTheme: MaterialTheme(Theme.of(context).textTheme).dark(),
+      darkTheme: MaterialTheme(Theme.of(context).textTheme).dark(),
+      initialRoute: '/login',
+      routes: {
+        '/login': (_) => LoginPage(),
+        '/register': (_) => RegisterPage(),
+      },
+      debugShowCheckedModeBanner: false,
     );
   }
 }
-
