@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Smart Routine'),
-          backgroundColor: Color(0xFF946DE8),
+          backgroundColor: const Color(0xFF946DE8),
           centerTitle: true,
         ),
         body: const Center(
@@ -19,16 +19,16 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Card.outlined(
+                color: Color(0xFF946DE8),
                 child: _SampleCard(cardName: 'Morning Yoga Routine'),
-                color: Color(0xFF946DE8),
               ),
               Card.outlined(
+                color: Color(0xFF946DE8),
                 child: _SampleCard(cardName: 'Read a Chapter of a book'),
-                color: Color(0xFF946DE8),
               ),
               Card.outlined(
-                child: _SampleCard(cardName: 'Cook a New Recipe for Dinner'),
                 color: Color(0xFF946DE8),
+                child: _SampleCard(cardName: 'Cook a New Recipe for Dinner'),
               ),
               SizedBox(height: 60)
             ],
@@ -36,8 +36,8 @@ class HomePage extends StatelessWidget {
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Color(0xFF946DE8),
-          items: [
+          backgroundColor: const Color(0xFF946DE8),
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.task, color: Color.fromARGB(255, 2, 0, 5)),
               label: '',
@@ -62,8 +62,8 @@ class HomePage extends StatelessWidget {
                       TaskCreator()), // Nome da sua segunda tela
             );
           },
+          backgroundColor: const Color(0xFF946DE8),
           child: Icon(Icons.add),
-          backgroundColor: Color(0xFF946DE8),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
@@ -96,7 +96,7 @@ class _SampleCardState extends State<_SampleCard> {
             Expanded(
               child: Text(
                 widget.cardName,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16), // Ajuste opcional do tamanho da fonte
                 overflow: TextOverflow
                     .ellipsis, // Isso evita que o texto ultrapasse o limite do espaço

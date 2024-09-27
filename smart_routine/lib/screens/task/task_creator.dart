@@ -16,16 +16,16 @@ class TaskCreator extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Smart Routine'),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context); // Voltar para a homepage
             },
           ),
-          backgroundColor: Color(0xFF946DE8),
+          backgroundColor: const Color(0xFF946DE8),
           centerTitle: true,
         ),
         body: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Form(
             key: _formKey,
             child: Column(
@@ -61,9 +61,9 @@ class TaskCreator extends StatelessWidget {
           // Adicionando o FloatingActionButton aqui
           onPressed: () {
             if (_formKey.currentState!.validate()) {}
-          },
-          child: Icon(Icons.add), // Ícone de adicionar
-          backgroundColor: Color(0xFF946DE8), // Cor de fundo
+          }, // Ícone de adicionar
+          backgroundColor: const Color(0xFF946DE8),
+          child: Icon(Icons.add), // Cor de fundo
         ),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.endFloat, // Posição do FAB
