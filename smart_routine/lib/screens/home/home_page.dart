@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+// Importe a segunda tela
+import 'package:smart_routine/screens/task/task_creator.dart'; // Certifique-se de que o caminho está correto
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -8,38 +9,34 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('Smart Routine'), 
-        backgroundColor: Color(0xFF946DE8),
-         centerTitle: true,
+        appBar: AppBar(
+          title: const Text('Smart Routine'),
+          backgroundColor: Color(0xFF946DE8),
+          centerTitle: true,
         ),
         body: const Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              
               Card.outlined(
                 child: _SampleCard(cardName: 'Morning Yoga Routine'),
-                color: Color(0xFF946DE8), 
-                  
-
-                ),
-              Card.outlined
-              (child: _SampleCard(cardName: 'Read a Chapter of a...'),
-              color: Color(0xFF946DE8),
-              ),
-
-              Card.outlined(
-                child: _SampleCard(cardName: 'Cook a New Recipe...'),
                 color: Color(0xFF946DE8),
-                ),
-                
-               const SizedBox(height: 60)
+              ),
+              Card.outlined(
+                child: _SampleCard(cardName: 'Read a Chapter of a book'),
+                color: Color(0xFF946DE8),
+              ),
+              Card.outlined(
+                child: _SampleCard(cardName: 'Cook a New Recipe for Dinner'),
+                color: Color(0xFF946DE8),
+              ),
+              SizedBox(height: 60)
             ],
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,  // Mantém os ícones alinhados uniformemente
-          backgroundColor: Color(0xFF946DE8),  // Cor de fundo da BottomNavigationBar
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Color(0xFF946DE8),
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.task, color: Color.fromARGB(255, 2, 0, 5)),
@@ -55,16 +52,20 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-          
         floatingActionButton: FloatingActionButton(
-          // Adicionando o FloatingActionButton aqui
           onPressed: () {
-            // Ação ao clicar no botão
+            // Navegar para a segunda tela
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      TaskCreator()), // Nome da sua segunda tela
+            );
           },
-          child: Icon(Icons.add), // Ícone de adicionar
-          backgroundColor: Color(0xFF946DE8), // Cor de fundo
+          child: Icon(Icons.add),
+          backgroundColor: Color(0xFF946DE8),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, // Posição do FAB
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
   }
@@ -84,18 +85,21 @@ class _SampleCardState extends State<_SampleCard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 328,
+      width: 492,
       height: 64,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),  // Adiciona espaçamento nas laterais
+        padding: const EdgeInsets.symmetric(
+            horizontal: 16.0), // Adiciona espaçamento nas laterais
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: Text(
                 widget.cardName,
-                style: TextStyle(fontSize: 16),  // Ajuste opcional do tamanho da fonte
-                overflow: TextOverflow.ellipsis,  // Isso evita que o texto ultrapasse o limite do espaço
+                style: TextStyle(
+                    fontSize: 16), // Ajuste opcional do tamanho da fonte
+                overflow: TextOverflow
+                    .ellipsis, // Isso evita que o texto ultrapasse o limite do espaço
               ),
             ),
             Checkbox(
