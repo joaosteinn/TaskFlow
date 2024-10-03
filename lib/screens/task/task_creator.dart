@@ -33,7 +33,7 @@ class TaskCreator extends StatelessWidget {
                   label: 'Título da Tarefa',
                   inputType: TextInputType.name,
                   validator: (value) {
-                    if (value == null || value.length > 0) {
+                    if (value == null || value.length <= 0) {
                       return 'Título vazio. Digite um título.';
                     }
                     return null;
@@ -45,7 +45,7 @@ class TaskCreator extends StatelessWidget {
                   inputType: TextInputType.multiline,
                   controller: _descriptionController,
                   validator: (value) {
-                    if (value == null || value.length > 0) {
+                    if (value == null || value.length <= 0) {
                       return 'Descrição vazia. Digite uma descrição.';
                     }
                     return null;

@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
       home: const HomePage(),
       theme: MaterialTheme(Theme.of(context).textTheme).light(),
       darkTheme: MaterialTheme(Theme.of(context).textTheme).dark(),
-      initialRoute: '/login',
+      initialRoute: '/home',
       debugShowCheckedModeBanner: false,
     );
   }
