@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:smart_routine/screens/shared/custom_text_field.dart';
 
 class TaskCreator extends StatelessWidget {
@@ -18,7 +17,7 @@ class TaskCreator extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context); // Voltar para a homepage
+              Navigator.pop(context);
             },
           ),
           backgroundColor: const Color(0xFF946DE8),
@@ -34,10 +33,10 @@ class TaskCreator extends StatelessWidget {
                   label: 'Título da Tarefa',
                   inputType: TextInputType.name,
                   validator: (value) {
-                    if (value == null || !EmailValidator.validate(value)) {
+                    if (value == null || value.length > 0) {
                       return 'Título vazio. Digite um título.';
                     }
-                    return null; // Tudo OK
+                    return null;
                   },
                   controller: _titleController,
                 ),
@@ -46,27 +45,24 @@ class TaskCreator extends StatelessWidget {
                   inputType: TextInputType.multiline,
                   controller: _descriptionController,
                   validator: (value) {
-                    if (value == null || !EmailValidator.validate(value)) {
+                    if (value == null || value.length > 0) {
                       return 'Descrição vazia. Digite uma descrição.';
                     }
-                    return null; // Tudo OK
+                    return null;
                   },
                 ),
               ],
             ),
           ),
         ),
-
         floatingActionButton: FloatingActionButton(
-          // Adicionando o FloatingActionButton aqui
           onPressed: () {
             if (_formKey.currentState!.validate()) {}
-          }, // Ícone de adicionar
+          },
           backgroundColor: const Color(0xFF946DE8),
-          child: Icon(Icons.add), // Cor de fundo
+          child: Icon(Icons.add),
         ),
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.endFloat, // Posição do FAB
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
   }

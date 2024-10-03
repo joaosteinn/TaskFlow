@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-// Importe a segunda tela
-import 'package:smart_routine/screens/task/task_creator.dart'; // Certifique-se de que o caminho está correto
+import 'package:smart_routine/screens/task/task_creator.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -54,12 +53,9 @@ class HomePage extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // Navegar para a segunda tela
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      TaskCreator()), // Nome da sua segunda tela
+              MaterialPageRoute(builder: (context) => TaskCreator()),
             );
           },
           backgroundColor: const Color(0xFF946DE8),
@@ -88,18 +84,15 @@ class _SampleCardState extends State<_SampleCard> {
       width: 492,
       height: 64,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: 16.0), // Adiciona espaçamento nas laterais
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: Text(
                 widget.cardName,
-                style: const TextStyle(
-                    fontSize: 16), // Ajuste opcional do tamanho da fonte
-                overflow: TextOverflow
-                    .ellipsis, // Isso evita que o texto ultrapasse o limite do espaço
+                style: const TextStyle(fontSize: 16),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             Checkbox(
