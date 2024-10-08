@@ -1,68 +1,81 @@
 import 'package:flutter/material.dart';
-import 'package:smart_routine/screens/task/task_creator.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_routine/repository/task_repository.dart';
+import 'package:smart_routine/store/task_store.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Smart Routine'),
-          backgroundColor: const Color(0xFF946DE8),
-          centerTitle: true,
-        ),
-        body: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Card.outlined(
-                color: Color(0xFF946DE8),
-                child: _SampleCard(cardName: 'Morning Yoga Routine'),
+    final tasksStore = Provider.of<TasksStore>(context);
+    final repository = Provider.of<TaskRepository>(context);
+    
+    return FutureBuilder( //usamos porque ele retornava um future de lista de task e queremos somente uma lista de task
+      future: repository.findAll(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            tasksStore.load(snapshot.data!);
+          }
+        }
+        else {
+          return const Center(
+            child: CircularProgressIndicator()
+          );
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Smart Routine'),
+            backgroundColor: const Color(0xFF946DE8),
+            centerTitle: true,
+          ),
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: ListView.builder(
+                itemCount: tasksStore.tasks.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card.outlined(
+                    color: const Color(0xFF946DE8),
+                    child: _SampleCard(cardName: tasksStore.tasks[index].name)
+                  );
+                },
               ),
-              Card.outlined(
-                color: Color(0xFF946DE8),
-                child: _SampleCard(cardName: 'Read a Chapter of a book'),
+            ),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: const Color(0xFF946DE8),
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.task, color: Color.fromARGB(255, 2, 0, 5)),
+                label: '',
               ),
-              Card.outlined(
-                color: Color(0xFF946DE8),
-                child: _SampleCard(cardName: 'Cook a New Recipe for Dinner'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.task_alt, color: Color.fromARGB(255, 2, 0, 5)),
+                label: '',
               ),
-              SizedBox(height: 60)
+              BottomNavigationBarItem(
+                icon: Icon(Icons.delete, color: Color.fromARGB(255, 2, 0, 5)),
+                label: '',
+              ),
             ],
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: const Color(0xFF946DE8),
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.task, color: Color.fromARGB(255, 2, 0, 5)),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.task_alt, color: Color.fromARGB(255, 2, 0, 5)),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.delete, color: Color.fromARGB(255, 2, 0, 5)),
-              label: '',
-            ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TaskCreator()),
-            );
-          },
-          backgroundColor: const Color(0xFF946DE8),
-          child: Icon(Icons.add),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () { 
+              Navigator.pushNamed(
+                context,
+                '/cadastro'
+              );
+            },
+            backgroundColor: const Color(0xFF946DE8),
+            child:  const Icon(Icons.add),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat
+        );
+      } 
     );
   }
 }

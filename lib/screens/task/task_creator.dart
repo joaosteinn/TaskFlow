@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_routine/model/task.dart';
+import 'package:smart_routine/repository/task_repository.dart';
 import 'package:smart_routine/screens/shared/custom_text_field.dart';
+import 'package:smart_routine/store/task_store.dart';
 
 class TaskCreator extends StatelessWidget {
   TaskCreator({super.key});
@@ -10,6 +14,9 @@ class TaskCreator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tasksStore = Provider.of<TasksStore>(context);
+    final repository = Provider.of<TaskRepository>(context);
+    
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -33,7 +40,7 @@ class TaskCreator extends StatelessWidget {
                   label: 'Título da Tarefa',
                   inputType: TextInputType.name,
                   validator: (value) {
-                    if (value == null || value.length <= 0) {
+                    if (value!.isEmpty) {
                       return 'Título vazio. Digite um título.';
                     }
                     return null;
@@ -45,7 +52,7 @@ class TaskCreator extends StatelessWidget {
                   inputType: TextInputType.multiline,
                   controller: _descriptionController,
                   validator: (value) {
-                    if (value == null || value.length <= 0) {
+                    if (value!.isEmpty) {
                       return 'Descrição vazia. Digite uma descrição.';
                     }
                     return null;
@@ -56,11 +63,20 @@ class TaskCreator extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {}
+          onPressed: () async{
+            if (_formKey.currentState!.validate()) {
+              final task = Task(
+                name: _titleController.text,
+                description: _descriptionController.text
+              );  
+              task.id = await repository.insert(task.toMap()); //vou trasformar o objeto task em um map e passar o parametro para o metodo insert
+              if(task.id! > 0){
+                tasksStore.add(task);
+              }
+            }
           },
           backgroundColor: const Color(0xFF946DE8),
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
