@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_routine/model/task.dart';
@@ -72,6 +74,7 @@ class TaskCreator extends StatelessWidget {
               task.id = await repository.insert(task.toMap()); //vou trasformar o objeto task em um map e passar o parametro para o metodo insert
               if(task.id! > 0){
                 tasksStore.add(task);
+                Navigator.pop(context);
               }
             }
           },
