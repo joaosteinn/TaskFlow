@@ -10,6 +10,21 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final tasksStore = Provider.of<TasksStore>(context);
     final repository = Provider.of<TaskRepository>(context);
+    bool isChecked = false;
+    int? indexTaskExcluir;
+
+    void clickItem(int index) async{
+      if (index == 2) {
+        if (indexTaskExcluir != null) {
+          final idTaskExcluir = tasksStore.tasks[indexTaskExcluir!].id;
+
+          if (idTaskExcluir! > 0) {
+            repository.delete(idTaskExcluir);
+            tasksStore.remove(idTaskExcluir);
+          }
+        }
+      }
+    }
     
     return FutureBuilder( //usamos porque ele retornava um future de lista de task e queremos somente uma lista de task
       future: repository.findAll(),
@@ -39,7 +54,32 @@ class HomePage extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return Card.outlined(
                     color: const Color(0xFF946DE8),
-                    child: _SampleCard(cardName: tasksStore.tasks[index].name)
+                    child: SizedBox(
+                      width: 492,
+                      height: 64,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                tasksStore.tasks[index].name,
+                                style: const TextStyle(fontSize: 16),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Checkbox(
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                  isChecked = value!;
+                                  indexTaskExcluir = value ? index : null;
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                   );
                 },
               ),
@@ -48,6 +88,7 @@ class HomePage extends StatelessWidget {
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             backgroundColor: const Color(0xFF946DE8),
+            onTap: clickItem,
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.task, color: Color.fromARGB(255, 2, 0, 5)),
@@ -76,49 +117,6 @@ class HomePage extends StatelessWidget {
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat
         );
       } 
-    );
-  }
-}
-
-class _SampleCard extends StatefulWidget {
-  const _SampleCard({required this.cardName});
-  final String cardName;
-
-  @override
-  State<_SampleCard> createState() => _SampleCardState();
-}
-
-class _SampleCardState extends State<_SampleCard> {
-  bool isChecked = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 492,
-      height: 64,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                widget.cardName,
-                style: const TextStyle(fontSize: 16),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Checkbox(
-              value: isChecked,
-              onChanged: (bool? value) {
-                setState(() {
-                  isChecked = value!;
-                });
-              },
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
